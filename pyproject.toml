@@ -1,0 +1,108 @@
+# ==============================================================================
+# The [project] table defined by Official python.org
+#
+# Read: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+# ==============================================================================
+[project]
+name = "lindsey_learn_open_source_101"
+version = "0.1.1"
+description = "Lindsey's first open source Python library - learning project with add_two function."
+license = "MIT"
+license-files = ["LICENSE.txt", "AUTHORS.rst"]
+authors = [
+    { name = "Lindsey Zhang", email = "yingzizhang1205@gmail.com" },
+]
+maintainers = [
+    { name = "Lindsey Zhang", email = "yingzizhang1205@gmail.com" },
+]
+keywords = ["learning", "open-source", "python"]
+readme = "README.rst"
+requires-python = ">=3.10,<4.0"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+
+# ------------------------------------------------------------------------------
+# Core Dependencies
+# ------------------------------------------------------------------------------
+dependencies = [
+]
+
+[project.optional-dependencies]
+
+# ------------------------------------------------------------------------------
+# Local Development dependencies
+# ------------------------------------------------------------------------------
+dev = [
+    "rich>=13.8.1,<14.0.0",
+]
+
+# ------------------------------------------------------------------------------
+# Test dependencies
+# ------------------------------------------------------------------------------
+test = [
+    "pytest>=8.2.2,<9.0.0",
+    "pytest-cov>=6.0.0,<7.0.0",
+]
+
+# ------------------------------------------------------------------------------
+# Documentation build dependencies
+# ------------------------------------------------------------------------------
+doc = [
+    "Sphinx>=7.4.7,<8.0.0",
+    "sphinx-copybutton>=0.5.2,<1.0.0",
+    "sphinx-design>=0.6.1,<1.0.0",
+    "sphinx-jinja>=2.0.2,<3.0.0",
+    "furo==2024.8.6",
+    "pygments>=2.18.0,<3.0.0",
+    "ipython>=8.18.1,<8.19.0",
+    "nbsphinx>=0.8.12,<1.0.0",
+    "rstobj==2.0.0",
+    "docfly==3.0.3",
+]
+
+# ------------------------------------------------------------------------------
+# Mise task runner dependencies
+# ------------------------------------------------------------------------------
+mise = [
+    "PyGithub>=2.8.0,<3.0.0",
+    "httpx>=0.28.0,<1.0.0",
+    "tomli>=2.0.0,<3.0.0; python_version < '3.11'",
+]
+
+[project.urls]
+Homepage = "https://github.com/LindseyZ1205/lindsey_learn_open_source_101-project"
+Documentation = "https://lindsey-learn-open-source-101.readthedocs.io/en/latest/"
+Repository = "https://github.com/LindseyZ1205/lindsey_learn_open_source_101-project"
+Issues = "https://github.com/LindseyZ1205/lindsey_learn_open_source_101-project/issues"
+Changelog = "https://github.com/LindseyZ1205/lindsey_learn_open_source_101-project/blob/main/release-history.rst"
+Download = "https://pypi.org/pypi/lindsey-learn-open-source-101#files"
+
+[project.scripts]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "lindsey_learn_open_source_101*"
+]
+exclude = [
+    "lindsey_learn_open_source_101.tests",
+    "lindsey_learn_open_source_101.tests.*",
+    "lindsey_learn_open_source_101.docs",
+    "lindsey_learn_open_source_101.docs.*",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"

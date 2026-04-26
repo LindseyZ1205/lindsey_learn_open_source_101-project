@@ -1,0 +1,73 @@
+[tools]
+python = "3.12"
+uv = "latest"
+
+# === Tasks ===
+# Python Environment Management
+[tasks.venv-create]
+description = "Create Python virtual environment using uv (creates .venv directory)"
+run = "uv venv --allow-existing"
+
+[tasks.venv-remove]
+description = "Remove Python virtual environment (deletes .venv directory)"
+run = "rm -r .venv"
+
+# Dependency Management
+[tasks.inst]
+description = "Install all Python dependencies using uv (syncs from pyproject.toml and uv.lock)"
+depends = ["venv-create"]
+run = "uv sync --all-extras"
+
+[tasks.export]
+description = "Export Python dependencies to requirements*.txt files using uv"
+run = """
+uv export --format requirements-txt --no-dev --no-emit-project --no-hashes --no-annotate | sed 's/ ; platform_machine ==.*or.*//' > requirements.txt
+uv export --format requirements-txt --extra dev --no-emit-project --no-hashes --no-annotate | sed 's/ ; platform_machine ==.*or.*//' > requirements-dev.txt
+uv export --format requirements-txt --extra test --no-emit-project --no-hashes --no-annotate | sed 's/ ; platform_machine ==.*or.*//' > requirements-test.txt
+uv export --format requirements-txt --extra doc --no-emit-project --no-hashes --no-annotate | sed 's/ ; platform_machine ==.*or.*//' > requirements-doc.txt
+uv export --format requirements-txt --extra mise --no-emit-project --no-hashes --no-annotate | sed 's/ ; platform_machine ==.*or.*//' > requirements-mise.txt
+"""
+
+# Testing
+[tasks.test]
+description = "Run unit tests using pytest"
+run = ".venv/bin/pytest tests"
+depends = ["inst"]
+
+[tasks.cov]
+description = "Run unit tests with code coverage using pytest (generates HTML report in htmlcov/)"
+run = ".venv/bin/pytest tests -s --tb=native --cov=lindsey_learn_open_source_101 --cov-report term-missing --cov-report html:htmlcov"
+depends = ["inst"]
+
+[tasks.view-cov]
+description = "Open code coverage HTML report in browser"
+run = "open htmlcov/index.html"
+
+# Documentation
+[tasks.build-doc]
+description = "Build Sphinx documentation"
+depends = ["inst"]
+run = """
+rm -rf docs/build
+.venv/bin/sphinx-build -b html docs/source docs/build/html
+"""
+
+[tasks.view-doc]
+description = "Open built Sphinx documentation in browser"
+run = "open docs/build/html/index.html"
+
+# Building & Publishing & Release
+[tasks.build]
+description = "Build Python package wheel and source distribution using uv"
+run = """
+rm -rf dist
+uv build
+"""
+
+[tasks.publish]
+description = "Publish Python package to PyPI using uv"
+run = """
+.venv/bin/python .mise/tasks/publish.py
+uv publish --token $PYPI_TOKEN
+"""
+depends = ["build"]
